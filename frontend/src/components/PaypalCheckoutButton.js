@@ -86,57 +86,6 @@ const PaypalCheckoutButton = ({user, createOrderAction, updateItemsBasket, histo
     
     return (
         <>
-
-            <PayPalButtons style={{ width: '400px' }} 
-                
-                createOrder={(data, actions) => {
-                    //console.log("Paypal createOrder called");
-                    return actions.order.create({
-                        purchase_units: [
-                            {
-                                amount: {
-                                    currency_code: "DKK",
-                                    value: total,
-                                    breakdown: {
-                                        item_total: {
-                                            currency_code: "DKK",
-                                            value: total
-                                        }
-                                    }
-                                },
-                                items: itemsForPaypal,
-                            }
-                        ]
-                    })
-                }}
-
-                onApprove={ async(data, actions) => {
-                    const order = await actions.order.capture();
-                    console.log("Paypal order", order);
-                    console.log("Paypal data", data);
-
-                    console.log("Paypal onApprove called");
-                    handleApprove(order);
-                }}
-
-                onError={(err) => {
-                    console.log("error", err);
-                    console.log("Paypal onError called");
-                }}
-
-                onCancel={() => {
-                    //display cancel message, redirect to initial page
-                    console.log("Paypal onCancel called");
-                }}
-
-                onClick={(data, actions) => {
-                    //validate on button click, client or server side
-                    //if something is wrong, then call actions.reject()
-                    //if everything is fine, then call actions.resolve() which internally will call createOrder function
-                    console.log("Paypal onClick called");
-                }}
-            />
-        
             <Button sx={{ width: '750px', marginBottom:"10px" }} onClick={payLaterButton} variant="contained">
                 Pay Later
             </Button>

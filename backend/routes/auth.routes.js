@@ -117,13 +117,13 @@ router.post("/updateUser",
       await user.save();
       
       const transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
+        host: "smtp.sendgrit.net",
         port: 587,
         secure: false,
         auth: {
-          user: 'testovtestov22@gmail.com',
-          pass: process.env.EMAIL_PASSWORD
-        }
+          user: 'apikey',
+          pass:process.env.SEND_GRIT
+          }
       });
       console.log(confirmationHash);
       const mailOptions = {

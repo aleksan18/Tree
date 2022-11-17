@@ -1,12 +1,11 @@
 import { takeLatest, call, put } from "redux-saga/effects";
-import {GET_CURRENT_ORDER,DELETE_ORDER, GET_CURRENT_ORDER_SUCCESS,UPDATE_ORDER,SAVE_CART,CREATE_ORDER,SAVE_ORDER,GET_ALL_ORDERS} from "../constants/order";
+import {GET_CURRENT_ORDER,DELETE_ORDER,UPDATE_ORDER,SAVE_CART,CREATE_ORDER,GET_ALL_ORDERS} from "../constants/order";
 import {LOGIN_SUCCESS,LOGIN_FAILURE} from "../constants/auth";
-import {refreshUser} from "../../services/auth.service";
 import {getCurrentOrderApi,getUpdateOrderApi,deleteOrderService,saveCartService,createOrderService,getAllOrders} from "../../services/order.service";
 import {setCurrentOrder,getAllOrdersSUCCESS,} from "../actions/order";
 import {setUser,unsetUser} from "../actions/user";
-
-import { saveCartAction, saveOrderAction } from "../actions/order";
+import {refreshUser} from "../../services/auth.service";
+import {updateItemsBasket } from "../actions/basket";
 function* getOrdersFlow(action){
   try{
     const token = action.payload;
@@ -46,14 +45,18 @@ function* createOrderFlow(action) {
 
     const {orderCreated} = yield call(createOrderService, order,token)  
     if (orderCreated) {
-      // order._id = addedOrderId      
-      //user.orders.push(order)
-      //user.cart = []
-      // yield put(setUser(user.token, user.id, user.role, user.exp,user.username,user.firstName,user.lastName,user.email,user.phone,user.address,user.cart,user.emailConfirmed,user.orders));
-      //const lastcreatedOrderIndex = user.orders.length - 1
-      //const lastCreatedOrder = user.orders[lastcreatedOrderIndex]
-      //console.log("lastCreatedOrder in createOrderFlow ", lastCreatedOrder)
+      // order._id = addedOrderId
+      const user=yield call(refreshUser,token);
+      console.log(user);
+      console.log(token.exp)
+      console.log(token.token);
+      user.orders.push(order)
+      user.cart = []
+      yield put(setUser(token, user.userId, user.role, token.exp,user.username,user.firstName,user.lastName,user.email,user.phone,user.address,user.cart,user.emailConfirmed,user.orders));
+      const lastcreatedOrderIndex = user.orders.length - 1
+      const lastCreatedOrder = user.orders[lastcreatedOrderIndex]
       yield put(setCurrentOrder(order));
+      yield put(updateItemsBasket([]))
       yield put({
         type: LOGIN_SUCCESS,
       });

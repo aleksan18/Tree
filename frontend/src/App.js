@@ -3,10 +3,6 @@ import { makeStyles } from "@mui/styles";
 import { createTheme } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import { BrowserRouter as Router } from "react-router-dom";
-import FacebookIcon from '@mui/icons-material/Facebook';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import { IconButton } from "@mui/material";
 import MessagePage from "./pages/MessagePage"
 import Routes from "./routes";
 import Navigation  from "./components/Navigation";
@@ -51,11 +47,6 @@ function App() {
       <Routes />
       </main>
       <footer className={classes.footer}>
-        <IconButton>
-        <FacebookIcon/>
-        </IconButton>
-        <IconButton> <InstagramIcon/></IconButton>
-        <IconButton>  <LinkedInIcon/></IconButton>
       </footer>
     </div>
     </Router>

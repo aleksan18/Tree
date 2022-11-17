@@ -14,6 +14,7 @@ import {
   loginApi,
   getLocalAuthToken,
   setAuthToken,
+  refreshUser,
   removeAuthToken,
 } from "../../services/auth.service";
 
@@ -52,10 +53,71 @@ function* loginFlow(credentials) {
         severity: "error",
       },
     });
+    yield put({
+      type:"FAILURE",
+      message:{
+        text:"Wrong email or password have been provided. Please try again.",
+        severity:"error"
+      }
+    })
   }
   return payload;
 }
 
+// function* loginWatcher() {
+//   let token = yield call(getLocalAuthToken);
+//   console.log(token);
+//   while (true) {
+//     if (!token) {
+//       while (!token) {
+//         const { payload } = yield take(LOGIN_REQUESTING);
+//         console.log(payload);
+//         yield call(loginFlow, payload);
+//         token = yield call(getLocalAuthToken);
+//       }
+//     } else if (token.exp < Date.now().valueOf()) {
+//       yield call(logout);
+//       yield put({
+//         type: LOGIN_FAILURE,
+//         message: {
+//           text: "Session expired. Please login again",
+//           severity: "error",
+//         },
+//       });
+//       yield put({
+//         type:"FAILURE",
+//         message:{
+//           text:"Session expired. Please login again",
+//           severity:"error"
+//         }
+//       })
+//       const { payload } = yield take(LOGIN_REQUESTING);
+//       yield call(loginFlow, payload);
+//     } else {
+//       console.log(token);
+//       const { payload } = yield take(LOGIN_REQUESTING);
+//       yield call(loginFlow, payload);
+//     }
+//     const {error} = yield take(USER_UNSET);
+//     if(error){
+//       history.push("/");
+//       //this happens once the backend has reject a request
+//       //once the token has expired you will be sent to the fronpage with an error 
+//       //stating expired or error with authorization of the token
+//     }else{
+//       token = null;
+//       yield call(logout);
+//       yield put({
+//         type:"SUCCESS",
+//         message:{
+//           text:"Logged out successfully",
+//           severity:"success"
+//         }
+//       });
+//     }  
+//     }
+ 
+// }
 function* loginWatcher() {
   let token = yield call(getLocalAuthToken);
   console.log(token);
@@ -86,16 +148,15 @@ function* loginWatcher() {
       const { payload } = yield take(LOGIN_REQUESTING);
       yield call(loginFlow, payload);
     } else {
+      const payload=yield call(refreshUser,token.token);
+      console.log(payload);
       console.log(token);
-      const { payload } = yield take(LOGIN_REQUESTING);
-      yield call(loginFlow, payload);
+      yield put(setUser(token.token, payload.userId, payload.role, token.exp,payload.username,payload.firstName, payload.lastName,payload.email,payload.phone,payload.address,payload.cart,payload.emailConfirmed,payload.orders));
+      yield put({ type: LOGIN_SUCCESS });
     }
     const {error} = yield take(USER_UNSET);
     if(error){
       history.push("/");
-      //this happens once the backend has reject a request
-      //once the token has expired you will be sent to the fronpage with an error 
-      //stating expired or error with authorization of the token
     }else{
       token = null;
       yield call(logout);
@@ -110,5 +171,4 @@ function* loginWatcher() {
     }
  
 }
-
 export default loginWatcher;

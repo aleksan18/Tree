@@ -6,7 +6,6 @@ import ShoppingPage from "./pages/ShoppingPage";
 import ItemPage from "./pages/ItemPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import ProfilePage from "./pages/ProfilePage";
-import ContactForm from "./components/ContactForm";
 import CreateItemPage from "./pages/CreateItemPage";
 import BasketPage from "./pages/BasketPage";
 import FormPage from "./pages/FormPage";
@@ -29,7 +28,6 @@ const Routes=({currentItem})=>{
         <Route path="/editItem/" exact><FormPage/></Route>
         <Route path="/editOrder/" exact><EditOrderPage></EditOrderPage></Route>
         <Route path="/viewOrder/" exact><ViewOrderPage></ViewOrderPage></Route>
-        <Route path="/contact" exact><ContactForm/> </Route>
         <Route path="/basket" exact><BasketPage/></Route>
         <Route path="/createItem" exact><CreateItemPage></CreateItemPage></Route>
         <Route path="/updateItem" exact><FormPage/></Route>

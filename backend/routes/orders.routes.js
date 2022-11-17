@@ -152,18 +152,10 @@ router.post("/createOrder",auth,async(req,res)=>{
     console.log(order);
     await order.save();
     const user = req.user;
-   // const userUpdated = await User.findOne({_id:order.userId}).populate("items");
     user.orders.push(order)
     user.cart = []
     await user.save();
-    console.log("userUpdated ", user)
-    //const addedOrderIndex = userUpdated.orders.length - 1
-    //const addedOrderId = userUpdated.orders[addedOrderIndex]
-    // const updatedOrders = [...user.orders, order._id];
-    // console.log("updatedOrders ", updatedOrders)
-    // console.log("updatedOrders ofter push ", updatedOrders)
-    // await user.updateOne({_id: user._id}, {orders: updatedOrders})
-
+    console.log(user)
     return res.status(201).json({orderCreated : order});
   }catch(error){
 

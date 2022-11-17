@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
 import {requestAllItems, setCurrentItem} from "../redux/actions/item";
-import { Grid, TextField, Button, Typography, Paper, InputLabel, Select,MenuItem, Checkbox, TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material";
+import { Grid, TextField, Button, Typography, Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material";
 import FileBase from 'react-file-base64';
 import {updateItem, createItem} from "../redux/actions/item";
 import PaypalCheckoutButton from './PaypalCheckoutButton';
 import { useHistory } from "react-router-dom"
-
+import { updateItemsBasket} from "../redux/actions/basket";
 
 const OrderDetailsComponent = ({ goBack,user, itemsInBasket, createOrderAction }) => {
     const history = useHistory()
@@ -15,24 +15,19 @@ const OrderDetailsComponent = ({ goBack,user, itemsInBasket, createOrderAction }
       const sameItemArray = itemsInBasket.filter(item => receivedItem._id === item._id);
       return sameItemArray.length;
     } 
-    console.log(" In OrderDetailsComponent, user ", user);
-    const cart = user.cart;
-    console.log("In OrderDetailsComponent cart", itemsInBasket )
-    
 
     const itemsToDisplay = []
     if (itemsInBasket.length){
       for (let i = 0; i < itemsInBasket.length; i++){
-        console.log("Index in the beginning", i)
+   
         const item = itemsInBasket[i]
-        console.log("item in itemsToDisplay", item)
+      
         const numberOfDuplicates = countSameItems(item) - 1
-        console.log("numberOfDuplicates ", numberOfDuplicates)
+     
         itemsToDisplay.push(item)
         i += numberOfDuplicates
-        console.log("Index in the end", i)
+    
       }
-      console.log("items in itemsToDisplay", itemsToDisplay)
 
     }
     
@@ -56,19 +51,6 @@ const OrderDetailsComponent = ({ goBack,user, itemsInBasket, createOrderAction }
 
     }
 
-    // const checkboxPressed = () =>  {
-    //     console.log("Checkbix pressed", checked)
-    //     checked = !checked
-    //     console.log("Checkbix pressed", checked)
-    //     if (checked) {
-    //         setForm({...user});
-    //     }else {
-    //         // setForm({...userProperties})
-            
-    //     }
-    //     console.log("Form ", form)
-
-    // }
 
     const capitalizeString = (initialStr) => {
         return initialStr
@@ -143,7 +125,11 @@ const OrderDetailsComponent = ({ goBack,user, itemsInBasket, createOrderAction }
 </TableContainer>
 </Grid>
   <Grid item xs={12}>
-    <PaypalCheckoutButton user={user} history={history} itemsInBasket={itemsInBasket} createOrderAction={createOrderAction}/>
+    <PaypalCheckoutButton user={user}
+     history={history}
+     updateItemsBasket={updateItemsBasket}
+     itemsInBasket={itemsInBasket} 
+     createOrderAction={createOrderAction}/>
   </Grid>
   <Grid item xs={12}>
     <Button onClick={goBack} variant="outlined">Back</Button>
@@ -155,8 +141,8 @@ const OrderDetailsComponent = ({ goBack,user, itemsInBasket, createOrderAction }
 
 const mapStateToProps = (state) => {
     return {
-        // itemsInBasket: state.basket.itemsInBasket, 
-        // userIsAuthenticated: state.user.isAuthenticated,
+        itemsInBasket: state.basket.itemsInBasket, 
+        userIsAuthenticated: state.user.isAuthenticated,
     };
 };
 

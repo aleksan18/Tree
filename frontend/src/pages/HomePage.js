@@ -119,7 +119,7 @@ return(
         </Grid>
        
         <Grid item xs={12} sm={12} md={12} xl={6} lg={6}>
-        <Box style={{height:"300px"}}   className={classes.back}>
+        {/* <Box style={{height:"300px"}}   className={classes.back}>
         <Typography variant="h4" textAlign="center">Highest Rated Designs</Typography>
         <Grid container spacing={1}>
         <Grid item xs={6} sm={6} md={6} xl={6} lg={6}>
@@ -144,8 +144,9 @@ return(
         </CardActionArea>
         </Card>
         </Grid>
-        </Grid></Box>
-        <Grid item xs={12} sm={12} md={6} xl={6} lg={6}> <Box style={{height:"300px"}} className={classes.back}>     
+        </Grid></Box> */}
+        <Grid item xs={12} sm={12} md={6} xl={6} lg={6}>
+        <Box style={{height:"600px"}} className={classes.back}>     
         <Typography variant="h4" textAlign="center">Highest Rated Items</Typography>
         <Grid container >
         {highestRated.slice(0,2).map((item)=>{

@@ -66,11 +66,25 @@ const ProfilePage=({getAllOrders,adminOrders,updateUser,errors,user,items,curren
       const handleClose = () => {
         setModalOpen(false);
         setDeleteOrderOpen(false);
+        getAllOrders(user.token)
       };
       //delete Dialogs are for opening dialogs for deleting either an item or an order
     return(
         <div>
-        <Profile adminOrders={adminOrders} setForm={setForm} setEnable={setEnable} enable={enable} formErrors={formErrors} errros={errors} getCurrentOrder={getCurrentOrder} setCurrentItem={setCurrentItem} handleDeleteOrderOpen={handleDeleteOrderOpen}  handleDeleteItemOpen={handleDeleteItemOpen} items={items} user={user} form={form} sendProfileUpdateForm={sendProfileUpdateForm} changeHandler={changeHandler}>
+        <Profile adminOrders={adminOrders} 
+        setForm={setForm} 
+        setEnable={setEnable}
+        enable={enable}
+        formErrors={formErrors} 
+        errros={errors} 
+        getCurrentOrder={getCurrentOrder} 
+        setCurrentItem={setCurrentItem} 
+        handleDeleteOrderOpen={handleDeleteOrderOpen}  
+        handleDeleteItemOpen={handleDeleteItemOpen} 
+        items={items} user={user} 
+        form={form} 
+        sendProfileUpdateForm={sendProfileUpdateForm} 
+        changeHandler={changeHandler}>
         
         </Profile>
       

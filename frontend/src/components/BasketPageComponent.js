@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import {  Grid,TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody, Button, ButtonGroup, Snackbar, Alert } from "@mui/material";
+import {  Grid,TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody, Button, ButtonGroup, Snackbar, Alert, Box, Typography } from "@mui/material";
 import { connect } from "react-redux";
 import {updateItemsBasket} from "../redux/actions/basket";
-import {Loader} from "./Loader"
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -96,7 +95,6 @@ export const BasketPageComponent=({goBack,itemsInBasket, user, updateItemsBasket
     }
 
     const buttonPressed = () => {
-      console.log("Button Pressed -- checkout")
       // const itemsInCart = itemsInBasket.map(item => item._id);
       // const itemsInCart = itemsToDisplay.map(currentItem => ({itemObject:currentItem, itemName:currentItem.name,itemPrice:currentItem.price, quantityInCart: countSameItems(currentItem), totalPerItem: countSameItems(currentItem) * currentItem.price}))
       // console.log("itemsInCart ", itemsInCart)
@@ -108,7 +106,11 @@ export const BasketPageComponent=({goBack,itemsInBasket, user, updateItemsBasket
     }
 
     return (
-        (!itemsToDisplay.length || !itemsInBasket.length) ? <Loader></Loader> : ( //if posts.length is 0 then is false, !false => true
+    (!itemsToDisplay.length || !itemsInBasket.length) ? <Box>
+      <Grid>
+        <Typography> No items in the basket</Typography>
+      </Grid>
+    </Box> : ( //if posts.length is 0 then is false, !false => true
             <>
     <Grid container>
     <Grid item xs={12}>

@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
     setModalOpen(false);
   };
   const handleClose = () => {
+    
     setModalOpen(false);
   };
   //requests for login that take time will render the loader component
@@ -82,24 +83,6 @@ const useStyles = makeStyles((theme) => ({
             component={NavLink}
             className={classes.button}
             color="inherit"
-            activeClassName="active"
-            to="/modeling"
-            >
-            3D Modeling
-            </Button>
-            <Button
-            className={classes.button}
-            color="inherit"
-            component={NavLink}
-            to="/contact"
-            activeClassName="active"
-            >
-            Contact
-            </Button>
-            <Button
-            component={NavLink}
-            className={classes.button}
-            color="inherit"
             onClick={logOut}
             activeClassName="active"
             to="/"
@@ -135,16 +118,6 @@ const useStyles = makeStyles((theme) => ({
           activeClassName="active"
           >
           Shop
-        </Button>
-        <Button
-        className={classes.button}
-        color="inherit"
-        component={NavLink}
-        to="/contact"
-        activeClassName="active"
-        >
-
-          Contact
         </Button>
         <Button
         className={classes.button}

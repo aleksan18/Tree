@@ -1,15 +1,30 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
+const https = require("https");
+const cors = require("cors");
+const fs= require("fs");
 require("dotenv").config();
+const options = {
+  key: fs.readFileSync("./keys/domain.key"),
+  cert: fs.readFileSync("./keys/domain.crt"),
+  passphrase:process.env.PASSPHASE
+};
 
+
+const helmet = require("helmet");
 const User = require("./model/User")
 const Furniture = require("./model/Furniture")
-
+const { stMonitor } = require('sematext-agent-express')
+stMonitor.start()
 const app = express();
+app.use(cors({
+  origin:"http://localhost:3000",
+}))
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
-
+app.use(helmet());
+// app.use(cors())
 app.use("/api/auth", require("./routes/auth.routes"));
 app.use("/api/orders", require("./routes/orders.routes"));
 app.use("/api", require("./routes/contact.routes"));
@@ -34,10 +49,12 @@ async function start() {
       useFindAndModify: false,
     });
     console.log("Connected to Mongo");
-    app.listen(PORT, () =>
-      console.log(`App has been started on port ${PORT}...`)
-    );
+    // app.listen(PORT, () =>
+    //   console.log(`App has been started on port ${PORT}...`)
+    // );
+    https.createServer(options, app).listen(8080);
   } catch (e) {
+    console.log(e);
     process.exit(1);
   }
   mongoose.connection.on('error', err => {

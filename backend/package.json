@@ -13,24 +13,29 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/html2canvas": "^1.0.0",
+    "@sematext/gc-stats": "^1.5.7",
     "accesscontrol": "^2.2.1",
     "axios": "0.24.0",
     "bcrypt": "^5.0.0",
     "cheerio": "^1.0.0-rc.3",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-rate-limit": "^6.7.0",
     "express-validator": "^6.6.1",
     "generate-password": "^1.5.1",
+    "helmet": "^6.0.0",
+    "https": "^1.0.0",
     "js": "^0.1.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.2",
     "nodemailer": "6.7.1",
-    "puppeteer": "^5.3.0"
+    "sematext-agent-express": "^2.1.4",
+    "spm-agent-nodejs": "^4.2.2"
   },
   "devDependencies": {
     "concurrently": "5.3.0",
     "cross-env": "^7.0.2",
-    "nodemon": "2.0.4"
+    "nodemon": "2.0.20"
   }
 }

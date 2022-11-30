@@ -4,11 +4,12 @@ const bcrypt = require("bcrypt");
 const { check, validationResult } = require("express-validator");
 const Furniture = require("../model/Furniture");
 const User = require("../model/User")
+const {rateLimiterOthers} = require("../middleware/rateLimiter.middleware");
 require("dotenv").config();
 const auth= require("../middleware/auth.middleware");
 
 const router = Router();
-
+router.use(rateLimiterOthers)
 // GET /api/items
 router.get("/items",
     async (req, res) => {

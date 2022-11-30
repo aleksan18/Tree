@@ -6,9 +6,9 @@ const User = require("../model/User");
 const auth = require("../middleware/auth.middleware");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
-
+const {rateLimiterOthers} = require("../middleware/rateLimiter.middleware");
 const router = Router();
-
+router.use(rateLimiterOthers)
 router.post("/contact", 
 [check("email", "Enter valid email").normalizeEmail().isEmail()],
 

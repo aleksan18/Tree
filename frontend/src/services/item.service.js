@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const storageName = "allItems";
-const requestItemsUrl = "/api/items";
+const requestItemsUrl = "https://localhost:8080/api/items";
 const updateItemUrl = "/api/updateItem";
 const createItemUrl ="/api/createItem";
 const deleteItemUrl="/api/deleteItem";

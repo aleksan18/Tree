@@ -10,6 +10,7 @@ const reducer = (state = initialState, action) => {
         itemsInBasket: [...action.payload],
       };
     case UPDATED_ITEMS_IN_BASKET:
+      console.log(action.payload);
       return {
         itemsInBasket: [...action.payload],
       };

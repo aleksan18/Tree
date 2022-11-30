@@ -132,7 +132,7 @@ const useStyles = makeStyles((theme) => ({
       </AppBar>
 
       
-      <AuthPage modalOpen={modalOpen} handleClose={handleClose} ></AuthPage>
+      <AuthPage handleClickOpen={handleClickOpen} modalOpen={modalOpen} handleClose={handleClose} ></AuthPage>
     </>
   )
 

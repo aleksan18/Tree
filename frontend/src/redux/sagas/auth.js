@@ -52,13 +52,15 @@ function* loginFlow(credentials) {
         text: "Session expired. Please login again",
         severity: "error",
       },
+      errors:error.errors
     });
     yield put({
       type:"FAILURE",
       message:{
         text:"Wrong email or password have been provided. Please try again.",
         severity:"error"
-      }
+      },
+      errors:error.errors
     })
   }
   return payload;
@@ -137,13 +139,14 @@ function* loginWatcher() {
           text: "Session expired. Please login again",
           severity: "error",
         },
+        
       });
       yield put({
         type:"FAILURE",
         message:{
           text:"Session expired. Please login again",
           severity:"error"
-        }
+        },
       })
       const { payload } = yield take(LOGIN_REQUESTING);
       yield call(loginFlow, payload);
@@ -156,7 +159,14 @@ function* loginWatcher() {
     }
     const {error} = yield take(USER_UNSET);
     if(error){
-      history.push("/");
+      yield put({
+        type:"FAILURE",
+        message:{
+          text:"Session expired. Please login again",
+          severity:"error"
+        }
+      })
+      // history.push("/");
     }else{
       token = null;
       yield call(logout);

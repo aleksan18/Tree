@@ -7,10 +7,10 @@ const Order= require("../model/Order");
 require("dotenv").config();
 const auth= require("../middleware/auth.middleware");
 
-
+const {rateLimiterOthers} = require("../middleware/rateLimiter.middleware");
 const router = Router();
 
-
+router.use(rateLimiterOthers)
  
 router.post("/updateOrder",auth,
 [

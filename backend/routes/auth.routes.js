@@ -6,12 +6,13 @@ const User = require("../model/User");
 const Order = require("../model/Order");
 const Furniture = require("../model/Furniture");
 const auth = require("../middleware/auth.middleware");
-
+const {rateLimiterAuth} = require("../middleware/rateLimiter.middleware");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 
 const router = Router();
+router.use(rateLimiterAuth)
 //POST /api/auth/updateUser
 router.post("/updateUser",   
     [
@@ -117,14 +118,15 @@ router.post("/updateUser",
       await user.save();
       
       const transporter = nodemailer.createTransport({
-        host: "smtp.sendgrit.net",
+        //host: "smtp.mandrillapp.com",
+        host:"smtp.sendgrid.net",
         port: 587,
         secure: false,
         auth: {
-          user: 'apikey',
-          pass:process.env.SEND_GRIT
-          }
-      });
+        user: 'apikey',
+        pass:process.env.SEND_GRIT
+        }
+    });
       console.log(confirmationHash);
       const mailOptions = {
         from: 'testovtestov22@gmail.com',
@@ -235,7 +237,7 @@ router.post(
       }
 
       const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-        expiresIn: "30m",
+        expiresIn: "10m",
       });
       res.json({ token,exp: token.exp, id: user.id, role: user.role,email:user.email,emailConfirmed:user.emailConfirmed,username:user.username,firstName:user.firstName,lastName:user.lastName,cart:user.cart,phone:user.phone,address:user.address,orders:user.orders});
     } catch (error) {
@@ -249,7 +251,10 @@ router.post(
     }
   }
 );
+router.get("/test",(req, res)=>{
 
+  return res.status(200).json({message:"SUCESS"})
+})
 router.post("/refreshUser",auth,async(req,res)=>{
 
   try{

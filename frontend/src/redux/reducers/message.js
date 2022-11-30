@@ -1,4 +1,5 @@
 import {HIDE_MESSAGE} from "../constants/user"
+import {SUCCESS,FAILURE,CLIENT_SIDE} from "../constants/message"
 const initialState={
     text:"",
     severity:"",
@@ -8,7 +9,7 @@ const initialState={
 }
 const reducer=(state=initialState,action)=>{
     switch(action.type){
-        case "SUCCESS":
+        case SUCCESS:
             return{
             text:action.message.text,
             severity:action.message.severity,
@@ -16,13 +17,22 @@ const reducer=(state=initialState,action)=>{
             scenario:true,
             isOpen:true
             }
-        case "FAILURE":
+        case FAILURE:
+            console.log(state)
             return{
                 text:action.message.text,
                 scenario:false,
                 severity:action.message.severity,
                 errors:action.errors,
                 isOpen:true
+            }
+        case CLIENT_SIDE:
+            return{
+                text:"",
+                scenario:false,
+                severity:"",
+                errors:action.errors,
+                isOpen:false
             }
         case HIDE_MESSAGE:
             return{

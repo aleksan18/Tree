@@ -28,23 +28,30 @@ export const EditOrder=({formErrors,errors,user,currentOrder,updateOrder})=>{
         <Box>
         <form autoComplete="off" noValidate onSubmit={handleSubmit}>
             <Typography variant="h6">{true ? 'Editing' : 'Creating'} an Order</Typography>
-            <TextField name="message" variant="outlined" 
+            <TextField name="message" variant="outlined"
+                        required={true}
                        label="Message"  value={form.message}
                        error={!!formErrors["message"]}
                        helperText={formErrors["message"] ? formErrors["message"] : "Enter message for the delivery"}
                        onChange={(e) => setForm({ ...form, message: e.target.value })} />
             <TextField placeholder="dd-MM-yyyy"  type="date" name="ordered" 
                        label="Ordered"   value={format(form.ordered)}
+                       required={true}
                        error={!!formErrors["ordered"]}
                        helperText={formErrors["ordered"] ? formErrors["ordered"] : "Enter date with format dd-MM-yyyy"}
-                       onChange={(e) =>  setForm({ ...form, ordered: format(e.target.value) })}  />
-            <TextField placeholder="dd-MM-yyyy" type="date"  name="sent" 
+                       onChange={(e) => {
+                           setForm({ ...form, ordered: e.target.value })
+                       setForm({ ...form, ordered: format(e.target.value) })}
+                       } />
+            <TextField placeholder="dd-MM-yyyy" type="date"  name="sent"
+                        required={true}
                        label="Sent" value={format(form.sent)}
                        error={!!formErrors["sent"]}
                        helperText={formErrors["sent"] ? formErrors["sent"] : "Enter date with format dd-MM-yyyy"}
                        onChange={(e) => setForm({ ...form, sent:  format(e.target.value)})}   />
             <TextField placeholder="dd-MM-yyyy"  name="delivered"  
-                       label="Delivered" type="date" value={format(form.delivered)} 
+                       label="Delivered" type="date" value={format(form.delivered)}
+                       required={true}
                        error={!!formErrors["delivered"]}
                        helperText={formErrors["delivered"] ? formErrors["delivered"] : "Enter date with format dd-MM-yyyy"}
                        onChange={(e) => setForm({ ...form, delivered: format(e.target.value)})} />

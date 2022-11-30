@@ -1,4 +1,5 @@
 import { Button, Link } from "@mui/material";
+import React from "react";
 import { Dialog,DialogContent,DialogTitle,DialogContentText,DialogActions } from "@mui/material";
 import { TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
@@ -38,8 +39,9 @@ const useStyles = makeStyles(() => ({
   }));
 export const Auth=({modalOpen,handleClose,form,submitHandler,changeHandler,formErrors})=>{
     const classes= useStyles();
-
+    const formRef = React.useRef();
     return(
+      <form ref={formRef}>
         <Dialog
         open={modalOpen}
         onClose={handleClose}
@@ -52,7 +54,7 @@ export const Auth=({modalOpen,handleClose,form,submitHandler,changeHandler,formE
           </DialogContentText>
           <TextField
             style={{marginBottom:theme.spacing(2)}}
-            required={true}
+            required
             onChange={changeHandler}
             autoFocus
             value={form.email}
@@ -69,6 +71,7 @@ export const Auth=({modalOpen,handleClose,form,submitHandler,changeHandler,formE
             className={classes.dialog}
             onChange={changeHandler}
             value={form.password}
+            required
             id="password"
             name="password"
             label="Password"
@@ -95,12 +98,12 @@ export const Auth=({modalOpen,handleClose,form,submitHandler,changeHandler,formE
             variant="contained"
             color="primary"
             type="submit"
-            onClick={submitHandler}
+            onClick={(e)=>{submitHandler(e);formRef.current.reportValidity()}}
           >
             Submit
           </Button>
         </DialogActions>
       </Dialog>
-      
+      </form>
     )
 }

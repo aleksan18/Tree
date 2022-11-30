@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const storageName = "userData";
-const loginUrl = "/api/auth/login";
-const refreshUrl = "/api/auth/refreshUser";
+const loginUrl = " https://localhost:8080/api/auth/login";
+const refreshUrl = "https://localhost:8080/api/auth/refreshUser";
 const registerUrl = "/api/auth/register";
 const updateUserUrl = "/api/auth/updateUser";
 const confirmationUrl = "/api/auth/confirmation";

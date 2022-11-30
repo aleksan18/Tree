@@ -34,13 +34,14 @@ const RegistrationPage=({errors,scenario,registerUser})=>{
   const sendRegistrationForm= (e)=>{
     e.preventDefault();
     registerUser(form);
+    console.log(scenario)
     if(scenario){
       console.log("AETWE");
-      setForm({});
+     
       history.push("/");
       setFormErrors({});
     };
- 
+    setForm({...form,email:"",username:"",password:"",confirmPassword:""});
    
   }
   const goBack=()=>{

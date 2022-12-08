@@ -6,9 +6,13 @@ let csurf = require('csurf');
 let csrfProtect = csurf({ cookie: true });
 let parseForm = bodyParser.urlencoded({ extended: false });
 
-/*const cookieExpirationDate = new Date();
+/*
+const cookieExpirationDate = new Date();
 const cookieExpirationDays = 365;
-cookieExpirationDate.setDate(cookieExpirationDate.getDate() + cookieExpirationDays)*/
+cookieExpirationDate.setDate(cookieExpirationDate.getDate() + cookieExpirationDays)
+
+<input type="hidden" name="_csrf" value="{{csrfToken}}"> --> HTML Form
+*/
 
 module.exports ={ 
     csrfProtect,

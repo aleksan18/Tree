@@ -1,10 +1,16 @@
 import { TextField, Button, Typography, InputLabel, Select,MenuItem } from "@mui/material";
 import { Grid} from "@mui/material";
-import { useState } from "react"
+import { useEffect, useState } from "react";
+import axios from 'axios';
 import FileBase from 'react-file-base64';
 import { useHistory } from "react-router-dom";
 
-export const CreateItem = ({setFormErrors,user,formErrors,errors,items,createItem})=>{
+const getCSRFToken = async () => {
+    const response = await axios.get('https://localhost:8080/api/getCsrfToken');
+    axios.defaults.headers.post['X-CSRF-Token'] = response.data.csrfToken;
+};
+
+export const CreateItem = ({user,formErrors,errors,items,createItem})=>{
     const history= useHistory();
     const [form,setForm] = useState({});
     console.log(form);
@@ -23,11 +29,18 @@ export const CreateItem = ({setFormErrors,user,formErrors,errors,items,createIte
         setForm({});
         history.goBack();
     }
+
+    
+    useEffect(()=>{
+        getCSRFToken()
+    },[]);
+
     return(
         <div>
         <Grid container spacing={2}>
         <form autoComplete="off" noValidate>
 
+        <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
         
         <Grid item xs={12}><Typography style={{width:"100%",textAlign:"center"}} variant="h2" sx={{ marginBottom: '15px' }}>Create Item</Typography></Grid>
         <TextField name="name" variant="outlined" required sx={{ marginBottom: '15px' }}

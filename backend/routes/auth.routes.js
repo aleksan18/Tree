@@ -9,6 +9,7 @@ const auth = require("../middleware/auth.middleware");
 const {rateLimiterAuth} = require("../middleware/rateLimiter.middleware");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
+const Sentry = require("@sentry/node");
 
 
 const router = Router();
@@ -29,6 +30,7 @@ router.post("/updateUser",
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
+          Sentry.captureException(errors.array());
           return res.status(400).json({
             errors: errors.array(),
             message: "Invalid data while registering",
@@ -54,6 +56,7 @@ router.post("/updateUser",
       return res.status(200).json(user);
       }catch (error) {
         console.log(error);
+        Sentry.captureException(error);
         return res.status(500).json({
           message: "Invalid authorization data",
           errors: [
@@ -81,6 +84,7 @@ router.post("/updateUser",
        const errors = validationResult(req);
 
        if (!errors.isEmpty()) {
+         Sentry.captureException(errors.array());
          return res.status(400).json({
            errors: errors.array(),
            message: "Invalid data while registering",
@@ -101,11 +105,13 @@ router.post("/updateUser",
         });
       }
       else if (candidateEmail) {
+         Sentry.captureMessage("Unsuccessful register with email already in use!");
          return res
            .status(400)
            .json({ message: "User with this email already exists",errors:[{value:email,msg:"User with this email already exists ",param:"email"}]});
        }
        else if (candidateUsername) {
+        Sentry.captureMessage("Unsuccessful register with username already in use!");
         return res
           .status(400)
           .json({ message: "User with this username already exists",errors:[{value:username,msg:"User with this username already exists ",param:"username"}]});
@@ -139,6 +145,7 @@ router.post("/updateUser",
       };
       transporter.sendMail(mailOptions, function(error, info){
         if (error) {
+          Sentry.captureException(error);
           return res.status(500).json({
             message: "",
             errors: [
@@ -151,6 +158,7 @@ router.post("/updateUser",
       }); 
        return res.status(201).json({ message: "User account created" });
      } catch (error) {
+      Sentry.captureException(error);
       return res.status(500).json({
         message: "",
         errors: [
@@ -187,6 +195,7 @@ router.post("/confirmation",[check("hash").exists().notEmpty(),],async(req,res)=
     }
   }catch (error) {
     console.log(error);
+    Sentry.captureException(error);
     return res.status(500).json({
       message: "Invalid data",
       errors: [
@@ -208,6 +217,7 @@ router.post(
       const errors = validationResult(req);
 
       if (!errors.isEmpty()) {
+        Sentry.captureException(errors.array());
         return res.status(400).json({
           errors: errors.array(),
           message: "Invalid authorization data",
@@ -219,6 +229,7 @@ router.post(
       const userCheck = await User.findOne({ email }).select(" password email orders cart emailConfirmed username phone address firstName lastName role").populate({path:"orders",populate:{path:"items"}}).populate("cart").exec();
       
       if (!userCheck) {
+        Sentry.captureMessage("Unsuccessful login with non-existing email!");
         return res.status(400).json({
           message: "Invalid authorization data",
           errors: [{ value: email, msg: "User not found", param: "email" }],
@@ -228,6 +239,7 @@ router.post(
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
+        Sentry.captureMessage("Unsuccessful login due to incorrect credentials!");
         return res.status(400).json({
           message: "Invalid authorization data",
           errors: [
@@ -242,6 +254,7 @@ router.post(
       res.json({ token,exp: token.exp, id: user.id, role: user.role,email:user.email,emailConfirmed:user.emailConfirmed,username:user.username,firstName:user.firstName,lastName:user.lastName,cart:user.cart,phone:user.phone,address:user.address,orders:user.orders});
     } catch (error) {
       console.log(error);
+      Sentry.captureException(error);
       return res.status(500).json({
         message: "Invalid data",
         errors: [

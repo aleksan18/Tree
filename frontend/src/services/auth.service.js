@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const storageName = "userData";
-const loginUrl = " https://localhost:8080/api/auth/login";
-const refreshUrl = "https://localhost:8080/api/auth/refreshUser";
-const registerUrl = "/api/auth/register";
-const updateUserUrl = "/api/auth/updateUser";
-const confirmationUrl = "/api/auth/confirmation";
+const loginUrl = " https://localhost/api/auth/login";
+const refreshUrl = "https://localhost/api/auth/refreshUser";
+const registerUrl = " https://localhost/api/auth/register";
+const updateUserUrl = " https://localhost/api/auth/updateUser";
+const confirmationUrl = " https://localhost/api/auth/confirmation";
 export const loginApi = (email, password) => {
   return axios
     .post(loginUrl, { email, password })

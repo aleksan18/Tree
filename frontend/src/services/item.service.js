@@ -1,10 +1,10 @@
 import axios from "axios";
 
 const storageName = "allItems";
-const requestItemsUrl = "https://localhost:8080/api/items";
-const updateItemUrl = "/api/updateItem";
-const createItemUrl ="/api/createItem";
-const deleteItemUrl="/api/deleteItem";
+const requestItemsUrl = "https://localhost/api/items";
+const updateItemUrl = "https://localhost/api/updateItem";
+const createItemUrl ="https://localhost/api/createItem";
+const deleteItemUrl="https://localhost/api/deleteItem";
 
 
 export const requestItems = () => {

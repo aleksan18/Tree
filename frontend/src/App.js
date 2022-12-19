@@ -1,4 +1,3 @@
-import { PayPalScriptProvider } from "@paypal/react-paypal-js"
 import { makeStyles } from "@mui/styles";
 import { createTheme } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";

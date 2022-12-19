@@ -5,6 +5,7 @@ import {useState,useEffect} from "react";
 const CreateItemPage = ({user,errors,items,createItem})=>{
     //formErrors are for displaying any erros on the page
     const [formErrors,setFormErrors]=useState({});
+    console.log(formErrors);
     useEffect(() => {
         if (errors) {
          
@@ -16,7 +17,7 @@ const CreateItemPage = ({user,errors,items,createItem})=>{
       }, [errors]);
 
     return(
-        <CreateItem  user={user} formErrors={formErrors} errors={errors} items={items} createItem={createItem}>
+        <CreateItem setFormErrors={setFormErrors}  user={user} formErrors={formErrors} errors={errors} items={items} createItem={createItem}>
 
         </CreateItem>
     )

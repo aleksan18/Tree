@@ -6,9 +6,10 @@ import { TextField, Button,Box, Typography, Paper, InputLabel, Select,MenuItem }
 import FileBase from 'react-file-base64';
 import {updateItem, createItem} from "../redux/actions/item";
 
-const FormPageComponent = ({formErrors, user,currentItem, items, setCurrentItem, updateItem }) => {
+const FormPageComponent = ({setFormErrors,formErrors, user,currentItem, items, setCurrentItem, updateItem }) => {
     const history = useHistory();
     const [form, setForm] = useState({...currentItem});
+    console.log(form)
     //the component is used for updating items
     const handleSubmit = (e) => { // e = event
         updateItem(user,form,user.token);
@@ -111,7 +112,7 @@ const FormPageComponent = ({formErrors, user,currentItem, items, setCurrentItem,
                     type="file"
                     multiple={true}
                     onDone={(receivedPics) => {
-                            const picturesArray = receivedPics.map(pic => pic.base64); 
+                            const picturesArray = receivedPics.map(pic => pic.base64);
                             setForm({ ...form, picturesArray });
                             }}
                 />

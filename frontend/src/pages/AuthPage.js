@@ -41,6 +41,9 @@ const AuthPage=({scenario,requesting,successful,formErrorAction,handleClickOpen,
     }
   };
   const checkForm= (targetName,targetValue)=>{
+    if(targetValue.match("^[a-zA-Z0-9_@,]*$") != null){
+      formErrorAction([...errors,{param:targetName,msg:`${targetName} should have valid characters`,value:"a"}])
+    }
     if(targetValue.length === 0){
       formErrorAction([...errors,{param:targetName,msg:`${targetName} should not be empty`,value:"a"}])
     }else{

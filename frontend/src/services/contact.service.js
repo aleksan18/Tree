@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const emailUrl = "/api/contact";
+const emailUrl = " https://localhost/api/contact";
 
 
 export const contactEmail = (firstName, lastName, email, subject, message ) => {

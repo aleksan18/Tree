@@ -1,10 +1,10 @@
 import axios from "axios";
-const getCurrentOrderUrl="/api/orders/order";
-const getAllOrdersUrl="/api/orders/orders";
-const updateOrderUrl="/api/orders/updateOrder";
-const deleteOrderUrl="/api/orders/deleteOrder";
-const createOrderUrl = "/api/orders/createOrder";
-const saveCartUrl = "/api/orders/saveCart"
+const getCurrentOrderUrl="https://localhost/api/orders/order";
+const getAllOrdersUrl="https://localhost/api/orders/orders";
+const updateOrderUrl="https://localhost/api/orders/updateOrder";
+const deleteOrderUrl="https://localhost/api/orders/deleteOrder";
+const createOrderUrl = "https://localhost/api/orders/createOrder";
+const saveCartUrl = "https://localhost/api/orders/saveCart"
 
 export const getAllOrders= (token)=>{
     return axios.post(getAllOrdersUrl,{},{headers:{authorization:`Bearer ${token}`}})

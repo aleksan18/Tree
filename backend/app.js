@@ -13,13 +13,13 @@ const options = {
 
 
 const helmet = require("helmet");
-const User = require("./model/User")
-const Furniture = require("./model/Furniture")
+const User = require("./model/User");
+const Furniture = require("./model/Furniture");
 const { stMonitor } = require('sematext-agent-express')
 stMonitor.start()
 const app = express();
 app.use(cors({
-  origin:"http://localhost:3000",
+  origin:"https://localhost",
 }))
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));

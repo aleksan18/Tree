@@ -4,9 +4,10 @@ import { useState } from "react"
 import FileBase from 'react-file-base64';
 import { useHistory } from "react-router-dom";
 
-export const CreateItem = ({user,formErrors,errors,items,createItem})=>{
+export const CreateItem = ({setFormErrors,user,formErrors,errors,items,createItem})=>{
     const history= useHistory();
     const [form,setForm] = useState({});
+    console.log(form);
     const updatedItemsList =[...items];
     const submitHandler = (event)=>{
         event.preventDefault();
@@ -122,7 +123,13 @@ export const CreateItem = ({user,formErrors,errors,items,createItem})=>{
                     type="file"
                     multiple={true}
                     onDone={(receivedPics) => {
-                            const picturesArray = receivedPics.map(pic => pic.base64); 
+                            const picturesArray = receivedPics.map(pic =>{
+                                if(pic.type !== "image/png"){
+                                    setFormErrors([...errors,{param:'file',value:"File to uploaded is not of the correct type,upload a png image"}])
+                                }else{
+                                    return  pic.base64
+                                }
+                            }); 
                             setForm({ ...form, picturesArray });
                             }}
                 />
